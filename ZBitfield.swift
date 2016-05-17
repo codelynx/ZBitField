@@ -3,12 +3,16 @@
 //  ZBitfield
 //
 //  Created by Kaz Yoshikawa on 2015/05/31.
-//  Copyright (c) 2015年 Electricwoods LLC. All rights reserved.
+//  Copyright (c) Kaz Yoshikawa. All rights reserved.
+//
+//	This software may be modified and distributed under the terms
+//	of the MIT license.
 //
 
 import Foundation
 
-private func bitString<T: IntegerType>(var value: T) -> String {
+private func bitString<T: IntegerType>(value: T) -> String {
+	var value = value
 	var string = ""
 	var separator = ""
 	let bits = sizeof(T) * 8
@@ -21,7 +25,7 @@ private func bitString<T: IntegerType>(var value: T) -> String {
 	return string
 }
 
-private func bitMask(index: UInt8, bits: UInt8) -> UInt8 {
+private func bitMask(index: UInt8, _ bits: UInt8) -> UInt8 {
 	assert(bits > 0 && index + bits <= 8)
 	var maskbit: UInt8 = 0b1111_1111
 	maskbit <<= (8 - bits)
@@ -29,7 +33,7 @@ private func bitMask(index: UInt8, bits: UInt8) -> UInt8 {
 	return maskbit
 }
 
-private func bitsValue(byte: UInt8, bitIndex: UInt8, bits: UInt8) -> UInt8 {
+private func bitsValue(byte: UInt8, _ bitIndex: UInt8, _ bits: UInt8) -> UInt8 {
 	let bits2shift: UInt = UInt(8 - (bitIndex + bits))
 	let postshift: UInt = UInt(byte) >> bits2shift
 	let bitmask: UInt = ~(0xff << UInt(bits))
@@ -37,7 +41,7 @@ private func bitsValue(byte: UInt8, bitIndex: UInt8, bits: UInt8) -> UInt8 {
 	return bitvalue
 }
 
-private func setBitsValue(inout byte: UInt8, bitIndex: UInt8, bits: UInt8, value: UInt8) {
+private func setBitsValue(inout byte: UInt8, _ bitIndex: UInt8, _ bits: UInt8, _ value: UInt8) {
 	let bits2shift: UInt = 8 - UInt(bitIndex + bits)
 	let shiftValue: UInt = UInt(value) << bits2shift
 	let maskbit = bitMask(bitIndex, bits)
@@ -53,7 +57,7 @@ class ZBitField {
 	init?(spec: [(String, Int)]) {
 		var positions: [String: (position: UInt, bits: UInt8)] = [:]
 		var position: UInt = 0
-		var names: Set<String> = []
+		//var names: Set<String> = []
 		for (key, bits) in spec {
 			assert(position < 0x8_000)
 			if bits == 0 || bits > 64 || positions[key] != nil {
@@ -74,19 +78,19 @@ class ZBitField {
 	func valueForKey(key: String) -> UInt64? {
 		// find bit position for the key
 		if let info = positions[key] {
-			var position = UInt(info.position)
+			let position = UInt(info.position)
 			var bits = UInt8(info.bits)
 			assert(Int(bits) <= sizeof(UInt64) * 8)
 			var value = UInt64(0) // initial value
 			var location = Int(position / 8) // location in buffer
 			var bitIndex = UInt8(position % 8) // bit offset
 			var bitCount = min(8 - bitIndex, bits)
-			if bitCount == 0 { bitCount = min(8, bits) ; location-- }
+			if bitCount == 0 { bitCount = min(8, bits) ; location -= 1 }
 			while (bits > 0) {
 				let byte = bytes[location]
 				let bitValue = bitsValue(byte, bitIndex, UInt8(bitCount))
 				value = (value << UInt64(bitCount)) | UInt64(bitValue)
-				location++ ; bitIndex = 0
+				location += 1 ; bitIndex = 0
 				bits -= bitCount ; bitCount = min(bits, 8)
 			}
 			return value
@@ -101,12 +105,12 @@ class ZBitField {
 			//	          1 1 0   0 1 1 0 0 1 1 0   0 1 1				<- value
 			//	1 1 1 1 0 1 1 0   0 1 1 0 0 1 1 0   0 1 1 1 0 0 0 0		<- output
 	
-	func setValue(var value: UInt64, forKey key: String) {
+	func setValue(value: UInt64, forKey key: String) {
 		assert(value >= 0)
 		// find bit position for the key
 		if let info = positions[key] {
-			var bitPosition = UInt(info.position)
-			var bitLength = UInt8(info.bits)
+			let bitPosition = UInt(info.position)
+			let bitLength = UInt8(info.bits)
 
 			//	example: 0b11110000_11110000_11110000, index=5, bits=14, value=0b11_0011_0011_0011
 			//	0 1 2 3 4 5 6 7   0 1 2 3 4 5 6 7   0 1 2 3 4 5 6 7		<- bit index
@@ -120,10 +124,10 @@ class ZBitField {
 			var value = UInt(value)
 			var bitCount = bitLength
 			while (bitCount > 0) {
-				var bits = min(bitTail % 8 == 0 ? 8 : bitTail % 8, UInt(bitCount))
-				var byteIndex = (bitTail - bits) / 8
-				var bitIndex = (bitTail - bits) % 8
-				var bitValue = value % UInt(1 << bits)
+				let bits = min(bitTail % 8 == 0 ? 8 : bitTail % 8, UInt(bitCount))
+				let byteIndex = (bitTail - bits) / 8
+				let bitIndex = (bitTail - bits) % 8
+				let bitValue = value % UInt(1 << bits)
 				setBitsValue(&bytes[Int(byteIndex)], UInt8(bitIndex), UInt8(bits), UInt8(bitValue))
 				value >>= bits
 				bitTail -= bits
@@ -145,7 +149,7 @@ class ZBitField {
 
 	var data: NSData {
 		get {
-			var data = NSMutableData()
+			let data = NSMutableData()
 			data.appendBytes(bytes, length: Int(length))
 			return data
 		}
