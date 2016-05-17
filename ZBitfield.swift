@@ -54,7 +54,7 @@ class ZBitField {
 	var bytes: [UInt8]
 	let length: UInt
 
-	init?(spec: [(String, Int)]) {
+	init?(_ spec: [(String, Int)]) {
 		var positions: [String: (position: UInt, bits: UInt8)] = [:]
 		var position: UInt = 0
 		//var names: Set<String> = []
