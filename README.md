@@ -51,7 +51,7 @@ let a = bitfield["alpha"]
 Bit format is defined by array of tuple (key, bits).  All keys must be unique within the same spec, and bits should be between 1 to 64.  Bit field larger than 64 bit are nor  supported.
 
 ```Swift
-  [ ("r", 5), ("g", 6), ("b", 6) .... ] // r: 5bit, g: 6bit, b: 5bit
+  [ ("r", 5), ("g", 6), ("b", 5) .... ] // r: 5bit, g: 6bit, b: 5bit
 
   [ ("unused", 1) ("type", 14), ("unused", 1) ] // error: key "unused" must be unique
   [ ("unused1", 1) ("type", 14), ("unused2", 1) ] // OK
