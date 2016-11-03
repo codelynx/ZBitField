@@ -1,3 +1,5 @@
+![swift](https://img.shields.io/badge/swift-3.0-orange.svg) ![license](https://img.shields.io/badge/license-MIT-yellow.svg)
+
 # ZBitField
 Utility code to implement bit field operation.  Programming language C provides bit field feature that developer can write some code to read or write bits without bit shifting as follows.
 
