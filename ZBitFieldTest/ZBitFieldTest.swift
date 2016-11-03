@@ -1,12 +1,11 @@
 //
-//	ZBitfieldTests.swift
-//	ZBitfieldTests
+//  ZBitFieldTest.swift
+//  ZBitFieldTest
 //
-//	Created by Kaz Yoshikawa on 2015/05/31.
-//	Copyright (c) 2015年 Electricwoods LLC. All rights reserved.
+//  Created by Kaz Yoshikawa on 11/3/16.
+//
 //
 
-import Cocoa
 import XCTest
 
 class ZBitfieldTests: XCTestCase {
@@ -22,7 +21,7 @@ class ZBitfieldTests: XCTestCase {
 	}
 
 	func testBasic8bit() {
-		if var bitfield = ZBitField(spec: [("b7", 1), ("b6_1", 6), ("b0", 1)]) {
+		if let bitfield = ZBitField([("b7", 1), ("b6_1", 6), ("b0", 1)]) {
 			XCTAssert(bitfield.length == 1)
 			
 			bitfield["b6_1"] = 0b101101 ; XCTAssert(bitfield["b6_1"] == 0b101101)
@@ -38,7 +37,7 @@ class ZBitfieldTests: XCTestCase {
 	}
 	
 	func testBasic16bit() {
-		if var bitfield = ZBitField(spec: [("hi4", 4), ("mi8", 8), ("lo4", 4)]) {
+		if let bitfield = ZBitField([("hi4", 4), ("mi8", 8), ("lo4", 4)]) {
 			XCTAssert(bitfield.length == 2)
 
 			bitfield["hi4"] = 0b1001 ; XCTAssert(bitfield["hi4"] == 0b1001)
@@ -51,7 +50,7 @@ class ZBitfieldTests: XCTestCase {
 	}
 
 	func testBasic32bit() {
-		if var bitfield = ZBitField(spec: [("high4", 4), ("mid24", 24), ("low4", 4)]) {
+		if let bitfield = ZBitField([("high4", 4), ("mid24", 24), ("low4", 4)]) {
 			XCTAssert(bitfield.length == 4)
 
 			// across byte boundary
@@ -77,7 +76,7 @@ class ZBitfieldTests: XCTestCase {
 			elements.append(element)
 		}
 		
-		if var bitfield = ZBitField(spec: elements) {
+		if let bitfield = ZBitField(elements) {
 			for index in 1...maxBit {
 				bitfield["bit\(index)"] = UInt(index % 2)
 			}
@@ -89,7 +88,7 @@ class ZBitfieldTests: XCTestCase {
 
 	func testRandomBits() {
 
-		func randomValueForBitWidths(bits: UInt32) -> UInt32 {
+		func randomValueForBitWidths(_ bits: UInt32) -> UInt32 {
 			if bits < 32 {
 				return arc4random_uniform(0xffff_ffff)  % (1 << bits)
 			}
@@ -107,7 +106,7 @@ class ZBitfieldTests: XCTestCase {
 			totalBits += bits
 		}
 
-		if var bitfield = ZBitField(spec: elements) {
+		if let bitfield = ZBitField(elements) {
 			for bits in 1...32 {
 				bitfield["a\(bits)"] = UInt(values["a\(bits)"]!)
 			}
@@ -121,16 +120,16 @@ class ZBitfieldTests: XCTestCase {
 
 	func testNSData() {
 		// "551234deadbeefaa" --> "VRI03q2+76o="
-		var data = NSData(base64EncodedString: "VRI03q2+76o=", options: .IgnoreUnknownCharacters)
-		if var bitfield1 = ZBitField(spec: [("a", 8), ("b", 16), ("c", 32), ("d", 8)]) {
+		let data = Data(base64Encoded: "VRI03q2+76o=", options: .ignoreUnknownCharacters)
+		if let bitfield1 = ZBitField([("a", 8), ("b", 16), ("c", 32), ("d", 8)]) {
 			bitfield1["a"] = UInt(0x55)
 			bitfield1["b"] = UInt(0x1234)
 			bitfield1["c"] = UInt(0xdeadbeef)
 			bitfield1["d"] = UInt(0xaa)
-			XCTAssert(data!.isEqualToData(bitfield1.data))
+			XCTAssert(data! == bitfield1.data)
 		}
 
-		if var bitfield2 = ZBitField(spec: [("a", 8), ("b", 16), ("c", 32), ("d", 8)]) {
+		if let bitfield2 = ZBitField([("a", 8), ("b", 16), ("c", 32), ("d", 8)]) {
 			bitfield2.data = data!
 			XCTAssert(bitfield2["a"] == UInt(0x55))
 			XCTAssert(bitfield2["b"] == UInt(0x1234))
@@ -141,7 +140,7 @@ class ZBitfieldTests: XCTestCase {
 
 	func testPerformanceExample() {
 		// This is an example of a performance test case.
-		self.measureBlock() {
+		self.measure() {
 			// Put the code you want to measure the time of here.
 		}
 	}
