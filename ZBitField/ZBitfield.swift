@@ -1,6 +1,6 @@
 //
-//  ZBitfield.swift
-//  ZKit
+//	ZBitfield.swift
+//	ZKit
 //
 //	The MIT License (MIT)
 //
@@ -27,7 +27,7 @@
 
 import Foundation
 
-private func bitString<T: Integer>(_ value: T) -> String {
+private func bitString<T: BinaryInteger>(_ value: T) -> String {
 	var value = value
 	var string = ""
 	var separator = ""

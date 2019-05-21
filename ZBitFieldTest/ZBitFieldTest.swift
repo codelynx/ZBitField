@@ -1,8 +1,8 @@
 //
-//  ZBitFieldTest.swift
-//  ZBitFieldTest
+//	ZBitFieldTest.swift
+//	ZBitFieldTest
 //
-//  Created by Kaz Yoshikawa on 11/3/16.
+//	Created by Kaz Yoshikawa on 11/3/16.
 //
 //
 
