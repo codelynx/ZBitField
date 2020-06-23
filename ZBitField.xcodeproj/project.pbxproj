@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CC23FF551DCAD07200C0BE7B /* ZBitFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC23FF541DCAD07200C0BE7B /* ZBitFieldTest.swift */; };
 		CC23FF5C1DCAD09D00C0BE7B /* ZBitfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC23FF5B1DCAD09D00C0BE7B /* ZBitfield.swift */; };
+		CCC4002A24A240E7007A40AF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CCC4002924A240E7007A40AF /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		CC23FF541DCAD07200C0BE7B /* ZBitFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZBitFieldTest.swift; sourceTree = "<group>"; };
 		CC23FF561DCAD07200C0BE7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC23FF5B1DCAD09D00C0BE7B /* ZBitfield.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZBitfield.swift; sourceTree = "<group>"; };
+		CCC4002924A240E7007A40AF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +34,7 @@
 		CC23FF461DCAD05B00C0BE7B = {
 			isa = PBXGroup;
 			children = (
+				CCC4002924A240E7007A40AF /* README.md */,
 				CC23FF5A1DCAD08D00C0BE7B /* ZBitField */,
 				CC23FF531DCAD07200C0BE7B /* ZBitFieldTest */,
 				CC23FF521DCAD07200C0BE7B /* Products */,
@@ -95,7 +98,7 @@
 					CC23FF501DCAD07200C0BE7B = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 2P97EM4L4N;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -123,6 +126,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCC4002A24A240E7007A40AF /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +265,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -309,7 +313,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
